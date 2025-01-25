@@ -11,18 +11,11 @@ A second post, just for testing.
     ```bash
     $ echo "Hello world!"
     ```
-    ```bash
-    {% highlight shell %}
-    $ echo "Hello world!"
-    {% endhighlight %}
-    ```
-    {% highlight shell %}
-    $ echo "Hello world!"
-    {% endhighlight %}
-
 2. Containerfile
-    ```dockerfile
-    {% highlight docker %}
+    ```Dockerfile
     RUN echo "Hello world!"
-    {% endhighlight %}
+    ```
+3. Python
+    ```python
+    print(f'Hello world!')
     ```
