@@ -17,9 +17,7 @@ A second post, just for testing.
     {% endhighlight %}
     ```
     {% highlight shell %}
-    ```bash
     $ echo "Hello world!"
-    ```
     {% endhighlight %}
 
 2. Containerfile
