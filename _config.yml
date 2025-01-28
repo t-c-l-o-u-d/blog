@@ -9,7 +9,7 @@ description: >
 
 # Build settings
 
-markdown: CommonMark
+markdown: GFM
 highlighter: rouge
 
 # If you clone the Minima repo and build locally, use this setting.
