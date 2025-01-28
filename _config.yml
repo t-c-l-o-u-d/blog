@@ -9,11 +9,8 @@ description: >
 
 # Build settings
 
-markdown: kramdown
+markdown: CommonMark
 highlighter: rouge
-kramdown:
-    input: GFM
-    syntax_highlighter: rouge
 
 # If you clone the Minima repo and build locally, use this setting.
 #theme: minima
