@@ -7,17 +7,11 @@ author:
 description: >
   A place to put my personal thoughts about tech and occasionally other stuff.
 
-# Build settings
-
+# use GitHub Markdown
 markdown: GFM
 highlighter: rouge
 
-# If you clone the Minima repo and build locally, use this setting.
-#theme: minima
-
-# As of November 2023, GitHub Pages still uses Minima 2.5.1 (https://pages.github.com/versions/). 
-# If you want to use the latest Minima version on GitHub Pages, use the following setting and 
-# add a line comment on "theme: minima" above.
+# theme selector
 remote_theme: jekyll/minima
 
 plugins:
@@ -29,32 +23,22 @@ plugins:
 # If you want to link only specific pages in your header, use this and add the path to the pages
 # in order as they should show up.
 header_pages:
-  - about/index.md
   - repositories/index.md
+  - about/index.md
 
 # Set to `true` to show excerpts on the homepage.
-#show_excerpts: false
+#show_excerpts: true
 
-# Minima specific settings, which are only available from Minima 3.0 onward.
+# Minima specific settings for v3.0+
 minima:
-  # Minima skin selection.
-  # Available skins are:
-  # classic	           Default, light color scheme.
-  # dark	             Dark variant of the classic skin.
-  # auto	             Adaptive skin based on the default classic and dark skins.
-  # solarized-light	   Light variant of solarized color scheme.
-  # solarized-dark	   Dark variant of solarized color scheme.
-  # solarized	         Adaptive skin for solarized color scheme skins.
   skin: auto
   
-  # Minima date format.
-  # The default value is "%b %d, %Y" (e.g. Nov 14, 2023) 
-  # Refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this.
+  # Minima date format
+  # Doc: https://shopify.github.io/liquid/filters/date/
   date_format: "%Y-%m-%d"
 
-  # Generate social links in footer.
+  # Generate social links in footer
   social_links:
-    - { platform: github,         user_url: "https://github.com/t-c-l-o-u-d" }
-  #  - { platform: gitlab,         user_url: "https://gitlab.com/jekyll" }
-  #  - { platform: linkedin,       user_url: "https://www.linkedin.com/in/jekyll" }
-  #  - { platform: youtube,        user_url: "https://www.youtube.com/jekyll" }
+    - title: GitHub
+      icon: github
+      url: "https://github.com/t-c-l-o-u-d"
