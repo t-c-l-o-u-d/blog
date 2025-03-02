@@ -26,9 +26,6 @@ header_pages:
   - repositories/index.md
   - about/index.md
 
-# Set to `true` to show excerpts on the homepage.
-#show_excerpts: true
-
 # Minima specific settings for v3.0+
 minima:
   skin: auto
@@ -36,6 +33,9 @@ minima:
   # Minima date format
   # Doc: https://shopify.github.io/liquid/filters/date/
   date_format: "%Y-%m-%d"
+
+  # Show excerpts on the homepage
+  show_excerpts: true
 
   # Generate social links in footer
   social_links:
