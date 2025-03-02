@@ -5,14 +5,7 @@ date: 2025-03-02
 categories: devcontainers
 ---
 
----
-layout: post
-title: Development Container Base Images
-date: 2025-03-02
-categories: development
----
-
-Today I want to introduce one of my [repositories](https://blog.varmack.com/repositories) regarding Development Containers. Without further ado, let's dive in.
+Today I want to introduce one of my [repositories](https://github.com/t-c-l-o-u-d/devcontainer-base-images) regarding Development Containers. Without further ado, let's dive in.
 
 ### What Are Development Containers?
 
@@ -117,7 +110,7 @@ RUN pacman --sync --noconfirm \
 ```
 
 The `devcontainer.json` file is equally boring and I like that. Boring and simple are great for helping people unfamiliar with your project to quickly grasp how things come together and how they can effectively contribute. The notable thing here is that extensions and settings for VSCode are all contained with the container! This ensures that anyone else who clones this repository and uses the dev container ends up with an exact replica of my environment. No more *"It works on my machine."*
-```json
+```jsonc
 ...
 "settings": {
 		...
@@ -139,5 +132,3 @@ The `devcontainer.json` file is equally boring and I like that. Boring and simpl
 
 ### Closing Thoughts
 Not everyone will agree with my usage of dev containers in this way, but it works for me and hopefully they will work for you!
-
-This page was last updated at {{ "now" | date: "%Y-%m-%d %H:%M" }}.
