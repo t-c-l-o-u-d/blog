@@ -15,10 +15,10 @@ You are reading it! Here is the repository used to construct this site.
 
 ### Containers
 
-* [devcontainer-base-images](https://github.com/t-c-l-o-u-d/config-devcontainer)
+* [devcontainer-base-images](https://github.com/t-c-l-o-u-d/devcontainer-base-images)
 * [docs-containers](https://github.com/t-c-l-o-u-d/docs-containers)
 * [docs-openshift](https://github.com/t-c-l-o-u-d/docs-openshift)
-* [config-openshift](https://github.com/t-c-l-o-u-d/docs-openshift)
+* [config-openshift](https://github.com/t-c-l-o-u-d/config-openshift)
 * [containers](https://gitlab.com/tcloud-private/containers) 
 
 ### Configuration
@@ -41,5 +41,3 @@ Nothing serious happens in here, these are merely my scratch areas to work with 
 ### Misc.
 * [bootc](https://gitlab.com/tcloud-private/bootc)
 * [ansible](https://gitlab.com/tcloud-private/ansible)
-
-This page was last updated at {{ "now" | date: "%Y-%m-%d %H:%M" }}.
