@@ -18,6 +18,3 @@ So here we are today. I have no idea how long I will keep this up or how good th
 With that being said, I have exposed many of my once private repositories. You can find them [here](https://blog.varmack.com/repositories).
 
 Phew, that was a lot to do and that wraps up this first post. I'll be back with more about my dev containers project soon!
-
-
-This page was last updated at {{ "now" | date: "%Y-%m-%d %H:%M" }}.
