@@ -8,12 +8,11 @@ categories: devcontainers
 Today I want to introduce one of my [repositories](https://github.com/t-c-l-o-u-d/devcontainer-base-images) regarding Development Containers. Without further ado, let's dive in.
 
 ### What Are Development Containers?
+TL;DR - They are a portable and reproducible development environment. 
 
 Quoting the [Development Containers](https://containers.dev/) homepage:
 
 "A development container (or dev container for short) allows you to use a container as a full-featured development environment. It can be used to run an application, to separate tools, libraries, or runtimes needed for working with a codebase, and to aid in continuous integration and testing. Dev containers can be run locally or remotely, in a private or public cloud, in a variety of supporting tools and editors."
-
-TL;DR - They are a portable and reproducible development environment. 
 
 Containers are great for deploying workloads, but this project took things to a new level by letting you *develop* inside a container.
 
