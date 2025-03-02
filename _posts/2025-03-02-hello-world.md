@@ -12,10 +12,8 @@ I have wanted to write a blog for years, but have never had the courage to put m
 
 So here we are today. I have no idea how long I will keep this up or how good the quality will be, but I am practicing what I preach.
 
-```
-Taking action, even if imperfect, is far more valuable than inaction.
-- Somebody I'm sure
-```
+*"Taking action, even if imperfect, is far more valuable than inaction."*
+
 
 With that being said, I have exposed many of my once private repositories. You can find them [here](https://blog.varmack.com/repositories).
 
