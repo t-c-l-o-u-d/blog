@@ -17,32 +17,29 @@ You are reading it! Here is the repository used to construct this site.
 
 * [devcontainer-base-images](https://github.com/t-c-l-o-u-d/config-devcontainer)
 * [docs-containers](https://github.com/t-c-l-o-u-d/docs-containers)
-* [openshift](https://gitlab.com/tcloud-private/openshift)  #coming soon!
-* [containers](https://gitlab.com/tcloud-private/containers)  #coming soon!
+* [docs-openshift](https://github.com/t-c-l-o-u-d/docs-openshift)
+* [config-openshift](https://github.com/t-c-l-o-u-d/docs-openshift)
+* [containers](https://gitlab.com/tcloud-private/containers) 
 
 ### Configuration
 
 Each of these repositories hold configuration information for a particular application that I currently or have used. 
 * [config-bash](https://github.com/t-c-l-o-u-d/config-bash)
-* [config-firefox](https://github.com/t-c-l-o-u-d/config-firefox) #coming soon!
-* [config-foot](https://github.com/t-c-l-o-u-d/config-foot) #coming soon!
-* [config-sway](https://github.com/t-c-l-o-u-d/config-sway) #coming soon!
-* [config-vim](https://github.com/t-c-l-o-u-d/config-vim) #coming soon!
-* [config-wow](https://github.com/t-c-l-o-u-d/wow) #coming soon!
-
+* [config-firefox](https://github.com/t-c-l-o-u-d/config-firefox)
+* [config-foot](https://github.com/t-c-l-o-u-d/config-foot)
+* [config-sway](https://github.com/t-c-l-o-u-d/config-sway)
+* [config-vim](https://github.com/t-c-l-o-u-d/config-vim)
+* [config-wow](https://github.com/t-c-l-o-u-d/wow)
 
 ### Programming Playgrounds
 
 Nothing serious happens in here, these are merely my scratch areas to work with different programming lanaguages as I expand my skillset beyond Systems Engineering.
 
-* [swift](https://gitlab.com/tcloud-private/swift) #coming soon!
-* [python](https://gitlab.com/tcloud-private/python) #coming soon!
-* [rust](https://github.com/t-c-l-o-u-d/rust) #coming soon!
-
-
+* [playground-python](https://github.com/t-c-l-o-u-d/playground-python)
+* [playground-rust](https://github.com/t-c-l-o-u-d/playground-rust)
 
 ### Misc.
-* [bootc](https://gitlab.com/tcloud-private/bootc) #coming soon!
-* [ansible](https://gitlab.com/tcloud-private/ansible) #coming soon!
+* [bootc](https://gitlab.com/tcloud-private/bootc)
+* [ansible](https://gitlab.com/tcloud-private/ansible)
 
 This page was last updated at {{ "now" | date: "%Y-%m-%d %H:%M" }}.
