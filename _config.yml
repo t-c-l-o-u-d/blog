@@ -27,7 +27,8 @@ header_pages:
   - about/index.md
 
 # Only build pages that have changed
-incremental: true
+# incremental: true
+# ^ Does not work on Github Actions; https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll
 
 # Minima specific settings for v3.0+
 minima:
