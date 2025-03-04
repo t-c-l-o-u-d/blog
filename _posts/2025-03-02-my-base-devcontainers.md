@@ -20,9 +20,12 @@ Containers are great for deploying workloads, but this project took things to a 
 The project includes numerous default images, but it doesn't cover my exact use case. I wanted a very specific set of items installed into each image and, for that, I needed to create my own.
 
 The repository consists of three images at the time of writing:
-1. [Arch Linux](ghcr.io/t-c-l-o-u-d/devcontainer-base-images/arch-linux-devcontainer:latest)
-2. [Fedora](ghcr.io/t-c-l-o-u-d/devcontainer-base-images/fedora-devcontainer:latest)
-3. [Ubuntu LTS](ghcr.io/t-c-l-o-u-d/devcontainer-base-images/ubuntu-lts-devcontainer:latest)
+1. [Arch Linux](https://ghcr.io/t-c-l-o-u-d/devcontainer-base-images/arch-linux-devcontainer:latest)
+	- `ghcr.io/t-c-l-o-u-d/devcontainer-base-images/arch-linux-devcontainer:latest`
+3. [Fedora](https://ghcr.io/t-c-l-o-u-d/devcontainer-base-images/fedora-devcontainer:latest)
+	- `ghcr.io/t-c-l-o-u-d/devcontainer-base-images/fedora-devcontainer:latest`
+5. [Ubuntu LTS](https://ghcr.io/t-c-l-o-u-d/devcontainer-base-images/ubuntu-lts-devcontainer:latest)
+	- `ghcr.io/t-c-l-o-u-d/devcontainer-base-images/ubuntu-lts-devcontainer:latest`
 
 These images contain a common set of tools that I would need across nearly any repository. Right now, you won't find things like `python` included because that isn't applicable across all of my repositories. Things aren't perfect, but they are continously maintained through a daily GitHub Actions build. Every part of the process is completely transparent and automated.
 
@@ -112,8 +115,8 @@ The `devcontainer.json` file is equally boring and I like that. Boring and simpl
 ```jsonc
 ...
 "settings": {
-		...
-		// repository specific settings go here
+	...
+	// repository specific settings go here
 	"python.analysis.reportExtraTelemetry": false
 },
 "extensions": [
@@ -130,4 +133,4 @@ The `devcontainer.json` file is equally boring and I like that. Boring and simpl
 ```
 
 ### Closing Thoughts
-Not everyone will agree with my usage of dev containers in this way, but it works for me and hopefully they will work for you!
+Thank you very much for reading, this has been the culmination of a lot of work on my part. Not everyone will agree with my usage of dev containers in this way, but it works for me and hopefully they will work for you!
