@@ -26,6 +26,9 @@ header_pages:
   - repositories/index.md
   - about/index.md
 
+# Only build pages that have changed
+incremental: true
+
 # Minima specific settings for v3.0+
 minima:
   skin: auto
