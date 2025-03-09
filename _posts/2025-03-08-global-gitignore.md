@@ -34,7 +34,13 @@ Success! This is exactly what I needed. Without further delay, lets see this in 
 3. Verify things are working by checking for the presence of a `.DS_Store` in a git directory.
 
     ```bash
-    tcloud@MacBookPro devcontainer-base-images % ls -1
+    tcloud@MacBookPro devcontainer-base-images % ls -1A
+    .DS_Store
+    .git
+    .github
+    .gitmodules
+    .submodules
+    .vscode
     COPYING
     Containerfile.ArchLinux
     Containerfile.Fedora
@@ -49,6 +55,7 @@ Success! This is exactly what I needed. Without further delay, lets see this in 
 
     nothing to commit, working tree clean
     ```
+    No `.gitignore` for this repository and no pending changes!
 
 ### Wrapping Up
 This wasn't a particulary exciting post, but it was something that has bothered me for a while. I was just recently bothered enough by it to investigate and thought I should document it here for others. A special shout out to a colleague of mine for pursuing this. Without their bug report on my devcontainer project, I may not have investigated this issue.
