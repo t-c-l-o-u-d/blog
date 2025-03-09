@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HOWTO: Global .gitignore
+title: "HOWTO: Global .gitignore"
 date: 2025-03-08
 categories: git, macOS
 ---
