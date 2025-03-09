@@ -2,7 +2,7 @@
 layout: post
 title: Hello world!
 date: 2025-03-02
-categories:
+tags: misc
 ---
 
 Welcome to my first ever blog post. Well, it is really the 3rd or 4th if you take a look at my commit history...but this is the first official one!

@@ -2,7 +2,7 @@
 layout: post
 title: "HOWTO: Global .gitignore"
 date: 2025-03-08
-categories: git, macOS
+tags: git macOS
 ---
 
 A global `.gitignore` file allows you to specify patterns for files and directories that should be ignored by Git across all repositories on your system.

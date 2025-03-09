@@ -2,7 +2,7 @@
 layout: post
 title: Development Container Base Images
 date: 2025-03-02
-categories: devcontainers
+tags: devcontainers
 ---
 
 Today I want to introduce one of my [repositories](https://github.com/t-c-l-o-u-d/devcontainer-base-images) regarding Development Containers. Without further ado, let's dive in.
