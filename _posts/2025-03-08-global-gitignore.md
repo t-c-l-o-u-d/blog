@@ -5,7 +5,6 @@ date: 2025-03-08
 categories: git, macOS
 ---
 
-### Global?
 A global `.gitignore` file allows you to specify patterns for files and directories that should be ignored by Git across all repositories on your system.
 
 ### macOS and .DS_Store
