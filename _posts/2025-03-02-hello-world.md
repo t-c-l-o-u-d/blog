@@ -5,7 +5,6 @@ date: 2025-03-02
 categories:
 ---
 
-### Hello World!
 Welcome to my first ever blog post. Well, it is really the 3rd or 4th if you take a look at my commit history...but this is the first official one!
 
 I have wanted to write a blog for years, but have never had the courage to put myself out there for wider criticism. Eventually, I thought "what do I have to lose?"
