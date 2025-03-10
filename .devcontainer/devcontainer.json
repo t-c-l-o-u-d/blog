@@ -1,0 +1,50 @@
+// GNU Affero General Public License v3.0 or later (see COPYING or https://www.gnu.org/licenses/agpl.txt)
+// Documentation: https://containers.dev/implementors/json_reference/
+{
+    "name": "${localWorkspaceFolderBasename}-devcontainer",
+    "build": {
+        "dockerfile": "Containerfile",
+        "context": "..",
+        "args": {
+            "USER": "${localEnv:USER}"
+        },
+        "options": [
+            "--platform=linux/amd64",
+            "--pull=newer",
+            "--squash-all"
+        ]
+    },
+    "remoteUser": "${localEnv:USER}",
+    "updateRemoteUserUID": true,
+    "workspaceMount": "",
+    "runArgs": [
+        //set your timezone here
+        "--env=TZ=Etc/UTC",
+        "--hostname=${localWorkspaceFolderBasename}-devcontainer",
+        "--name=${localWorkspaceFolderBasename}-devcontainer",
+        "--platform=linux/amd64",
+        "--userns=keep-id",
+        "--volume=${localWorkspaceFolder}:/workspaces/${localWorkspaceFolderBasename}:Z"
+       ],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "breadcrumbs.enabled": true,
+                "editor.codeLensFontFamily": "'IBM Plex Mono'",
+                "editor.fontFamily": "'IBM Plex Mono'",
+                "editor.minimap.enabled": false,
+                "editor.stickyScroll.enabled": false,
+                "git.autofetch": true,
+                "git.confirmSync": false,
+                "markdown.preview.fontFamily": "'IBM Plex Sans', 'IBM Plex Mono'",
+                "workbench.startupEditor": "none",
+                "workbench.welcomePage.walkthroughs.openOnInstall": false
+                // repository specific settings go here
+            },
+            "extensions": [
+                "ms-azuretools.vscode-docker"
+                // repository specific extensions go here
+            ]
+        }
+    }
+}

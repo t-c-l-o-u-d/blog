@@ -1,0 +1,14 @@
+#!/bin/sh
+# GNU Affero General Public License v3.0 or later (see COPYING or https://www.gnu.org/licenses/agpl.txt)
+#
+# This uses /bin/sh intentionally for usage inside the Containerfile
+
+# setup location for gems
+export GEM_HOME="${HOME}/gems"
+
+# configure PATH
+if ! echo "${PATH}" | grep -q "${HOME}/gems/bin"; then
+    export PATH="${PATH}:${HOME}/gems/bin"
+fi
+
+alias srv='bundle exec jekyll serve --livereload --open-url http://localhost:4000/'

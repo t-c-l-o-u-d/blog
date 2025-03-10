@@ -1,0 +1,42 @@
+# GNU Affero General Public License v3.0 or later (see COPYING or https://www.gnu.org/licenses/agpl.txt)
+
+FROM ghcr.io/t-c-l-o-u-d/devcontainer-base-images/ubuntu-lts-devcontainer:latest
+
+# pull in USER from devcontainer.json
+ARG USER
+
+# add bash files
+COPY .devcontainer/blog-devcontainer /etc/skel/.config/bash/
+
+# add the USER to the image
+RUN useradd --create-home --shell /usr/bin/bash --groups wheel ${USER}
+
+# =======================================
+# repository specific commands start here
+# =======================================
+
+# install jekyll dependencies
+ENV PACKAGES="\
+    ruby \
+    ruby-dev \
+    zlib1g-dev \
+    "
+
+RUN export DEBIAN_FRONTEND=noninteractive; apt-get install -y ${PACKAGES}
+
+# switch to USER
+USER ${USER}
+
+# install jekyll
+RUN export GEM_HOME="${HOME}/gems"; gem install jekyll bundler
+
+# install site
+COPY Gemfile /tmp/
+RUN export GEM_HOME="${HOME}/gems"; ${HOME}/gems/bin/bundle install --gemfile=/tmp/Gemfile
+
+# =====================================
+# repository specific commands end here
+# =====================================
+
+# ensure the image starts as USER
+USER ${USER}
