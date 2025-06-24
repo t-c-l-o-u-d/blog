@@ -4,7 +4,7 @@
 // https://code.visualstudio.com/docs/terminal/profiles
 //
 {
-    "name": "${localWorkspaceFolderBasename}-devcontainer",
+    "name": "devcontainer-${localWorkspaceFolderBasename}",
     "build": {
         "dockerfile": "Containerfile",
         "context": "..",
@@ -20,12 +20,12 @@
     "updateRemoteUserUID": true,
     "workspaceMount": "",
     "runArgs": [
-        //set your timezone here
-        "--env=TZ=Etc/UTC",
-        "--hostname=${localWorkspaceFolderBasename}-devcontainer",
-        "--name=${localWorkspaceFolderBasename}-devcontainer",
+        "--env=TZ=America/Chicago",
+        "--hostname=devcontainer-${localWorkspaceFolderBasename}",
+        "--name=devcontainer-${localWorkspaceFolderBasename}",
         "--userns=keep-id",
-        "--volume=${localWorkspaceFolder}:/workspaces/${localWorkspaceFolderBasename}:Z"
+        "--volume=${localWorkspaceFolder}:/workspaces/${localWorkspaceFolderBasename}:Z,rw",
+        "--volume=${localEnv:HOME}/.bashrc:/home/${localEnv:USER}/.bashrc:Z,ro"
        ],
     "customizations": {
         "vscode": {
@@ -38,12 +38,11 @@
                 "workbench.startupEditor": "none",
                 "workbench.welcomePage.walkthroughs.openOnInstall": false,
                 "terminal.integrated.profiles.linux": {
-                    "bash-login": {
-                      "path": "/usr/bin/bash",
-                      "args": ["--login"]
+                    "bash": {
+                      "path": "/usr/bin/bash"
                     }
                   },
-                "terminal.integrated.defaultProfile.linux": "bash-login"
+                "terminal.integrated.defaultProfile.linux": "bash"
                 // repository specific settings go here
             },
             "extensions": [
