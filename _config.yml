@@ -1,11 +1,11 @@
 title: tcloud's Personal Blog
-author:
-  name: tcloud
+#author:
+#  name: tcloud
 
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
-description: >
-  A place to put my personal thoughts about tech and occasionally other stuff.
+#description: >
+#  NO_DESCRIPTION
 
 # use GitHub Markdown
 markdown: GFM
