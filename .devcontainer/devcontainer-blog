@@ -1,7 +1,5 @@
-#!/bin/sh
+#!/usr/bin/bash
 # GNU Affero General Public License v3.0 or later (see COPYING or https://www.gnu.org/licenses/agpl.txt)
-#
-# This uses /bin/sh intentionally for usage inside the Containerfile
 
 # setup location for gems
 export GEM_HOME="${HOME}/gems"
