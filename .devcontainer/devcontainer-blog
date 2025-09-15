@@ -1,8 +1,11 @@
 #!/usr/bin/bash
 # GNU Affero General Public License v3.0 or later (see COPYING or https://www.gnu.org/licenses/agpl.txt)
 
+# cleanup lock file
+rm --force /workspaces/blog/Gemfile.lock
+
 # setup location for gems
-export GEM_HOME="${HOME}/gems"
+export GEM_HOME="$(gem env user_gemhome)"
 
 # setup location for gem binaries
 _append_path "${GEM_HOME}/bin"

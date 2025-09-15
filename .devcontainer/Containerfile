@@ -1,6 +1,6 @@
 # GNU Affero General Public License v3.0 or later (see COPYING or https://www.gnu.org/licenses/agpl.txt)
 
-FROM ghcr.io/t-c-l-o-u-d/devcontainer-base-images/ubuntu-lts-devcontainer:latest
+FROM ghcr.io/t-c-l-o-u-d/devcontainer-base-images/arch-linux-devcontainer:latest
 
 # pull in USER from devcontainer.json
 ARG USER
@@ -9,23 +9,21 @@ ARG USER
 RUN useradd --create-home --shell /usr/bin/bash --groups wheel ${USER}
 
 # install jekyll dependencies
-ENV PACKAGES="\
+RUN pacman --sync --refresh --noconfirm --needed \
     ruby \
-    ruby-dev \
-    zlib1g-dev \
-    "
-
-RUN export DEBIAN_FRONTEND=noninteractive; apt-get install -y ${PACKAGES}
+    ruby-stdlib \
+    rubygems \
+    zlib-ng
 
 # switch to USER
 USER ${USER}
 
 # install jekyll
-RUN export GEM_HOME="${HOME}/gems"; gem install jekyll bundler
+RUN export GEM_HOME="$(gem env user_gemhome)"; gem install jekyll bundler
 
 # install site
 COPY Gemfile /tmp/
-RUN export GEM_HOME="${HOME}/gems"; ${HOME}/gems/bin/bundle install --gemfile=/tmp/Gemfile
+RUN export GEM_HOME="$(gem env user_gemhome)"; ${GEM_HOME}/bin/bundle install --gemfile=/tmp/Gemfile
 
 # add bash files
 RUN mkdir --parents "${HOME}/.config/bash/"
