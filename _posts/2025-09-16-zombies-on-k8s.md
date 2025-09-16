@@ -27,7 +27,7 @@ $ man -wK zombies
 
 A lot of output, but it helps to have a little context. Since we're dealing with processes, the `ps` man page is a good start.
 
-> "Z 	defunct (“zombie”) process, terminated but not reaped by its parent"
+> "Z  defunct (“zombie”) process, terminated but not reaped by its parent"
 
 > "Processes marked <defunct> are dead processes (so-called "zombies") that remain because their parent has not destroyed them properly. These processes will be destroyed by init(8) if the parent process exits." - https://man.archlinux.org/man/ps.1
 
@@ -147,46 +147,49 @@ I have written a small script that grabs the information we need to continue our
 #!/usr/bin/bash
 
 is_zombie() {
-    local pid=$1
-    local state=$(cat /proc/$pid/status 2>/dev/null | grep State | awk '{print $2}')
-    if [ "$state" = "Z" ]; then
-        return 0
-    else
-        return 1
-    fi
+  local pid=$1
+  local state=$(cat /proc/$pid/status 2>/dev/null | grep State | awk '{print $2}')
+  if [ "$state" = "Z" ]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 get_container_id() {
-    local pid=$1
-    cat /proc/$pid/cgroup 2>/dev/null | awk -F '-pod' '{print $2}' | awk -F '.slice' '{print $1}' | sed -e 's/_/-/g'
+  local pid=$1
+  cat /proc/$pid/cgroup 2>/dev/null | awk -F 'crio-' '{print $2}' | awk -F '.scope' '{print $1}'
 }
 
 get_pod_and_namespace() {
-    local container_id=$1
-    kubectl --kubeconfig=/var/lib/kubelet/kubeconfig get pods --all-namespaces -o json | jq -r --arg container_id "$container_id" '
-        .items[] | 
-        select(.metadata.uid == $container_id) | 
-        {namespace: .metadata.namespace, name: .metadata.name, containers: [.spec.containers[].name]}'
+  local container_id=$1
+  crictl inspect "$container_id" | jq -r '.[].labels
+    | select(.["io.kubernetes.container.name"] != null)
+    | {
+        name: .["io.kubernetes.container.name"],
+        pod: .["io.kubernetes.pod.name"],
+        namespace: .["io.kubernetes.pod.namespace"]
+      }'
 }
 
 zombie_pids=$(ps -eo pid,state | awk '$2 == "Z" {print $1}')
 
 if [ -z "$zombie_pids" ]; then
-    echo "No zombie processes found."
-    exit 0
+  echo "No zombie processes found."
+  exit 0
 fi
 
 for pid in $zombie_pids; do
-    if is_zombie $pid; then
-        container_id=$(get_container_id $pid)
+  if is_zombie $pid; then
+    container_id=$(get_container_id $pid)
 
-        pod_info=$(get_pod_and_namespace $container_id)
-        if [ -n "$pod_info" ]; then
-            echo "Zombie PID: $pid"
-            echo "Container ID: $container_id"
-            echo "Pod Information: $pod_info"
-        fi
+    pod_info=$(get_pod_and_namespace $container_id)
+    if [ -n "$pod_info" ]; then
+      echo "Zombie PID: $pid"
+      echo "Container ID: $container_id"
+      echo "Pod Information: $pod_info"
     fi
+  fi
 done
 ```
 
