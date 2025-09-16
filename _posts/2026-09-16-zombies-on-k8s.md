@@ -166,7 +166,7 @@ get_pod_and_namespace() {
     kubectl --kubeconfig=/var/lib/kubelet/kubeconfig get pods --all-namespaces -o json | jq -r --arg container_id "$container_id" '
         .items[] | 
         select(.metadata.uid == $container_id) | 
-        {namespace: .metadata.namespace, name: .metadata.name, container(s): [.spec.containers[].name]}'
+        {namespace: .metadata.namespace, name: .metadata.name, containers: [.spec.containers[].name]}'
 }
 
 zombie_pids=$(ps -eo pid,state | awk '$2 == "Z" {print $1}')
