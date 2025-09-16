@@ -5,11 +5,11 @@ date: 2025-09-16
 tags: kubernetes k8s openshift ocp
 ---
 
-A recent finding arose when I was reviewing my kubernetes cluster. I noticed several odd processes lingering on one of my nodes. As I began my investigation, I learned that they were zombies! 🧟🧟🧟 Contained within this post lies my method to learn about, detect, emulate, and squash the zombies.
+A recent finding arose when I was reviewing my Kubernetes cluster. I noticed several odd processes lingering on one of my nodes. As I began my investigation, I learned that they were zombie processes! 🧟🧟🧟 Read on to see how I learned about, detected, and emulated them.
 
 ---
-### What is a zombie process?
-Well this is an obvious question I immediately had and I am sure some of the readers out there will too. Before this incident, I had never heard of a zombie. As all engineers should, to the man pages!
+## What is a zombie process?
+Well, this is an obvious question I immediately had, and I'm sure some readers will too. Before this incident, I had never heard of a zombie process. Like a good engineer: to the man pages!
 
 ```bash
 $ man -wK zombies
@@ -25,7 +25,7 @@ $ man -wK zombies
 /usr/share/man/man2/clone.2.gz
 ```
 
-A lot of output, but in the case it helps to have a little context. Since we are dealing with processes I think the `ps` man page is a good start.
+A lot of output, but it helps to have a little context. Since we're dealing with processes, the `ps` man page is a good start.
 
 > "Z 	defunct (“zombie”) process, terminated but not reaped by its parent"
 
@@ -36,11 +36,11 @@ I also took to [Wikipedia](https://en.wikipedia.org/wiki/Zombie_process) to lear
 
 Okay, so none of that sounds terrible, but let's get started with detecting these and remediating the underlying issue.
 
----
-### How can we detect them?
+
+## How can we detect them?
 [_] - Detection
 
-Detecting these are quite easy actually. Logging into any node and running `ps` will show them as seen below:
+Detecting them is quite straightforward. Logging into any `worker` node and running `ps` will show them as seen below:
 
 ```bash
 $ ps -o pid,ppid,state,cmd -e | awk 'NR==1; $3 ~ /^[Zz]/'
@@ -57,7 +57,8 @@ $ ps -o pid,ppid,state,cmd -e | awk 'NR==1; $3 ~ /^[Zz]/'
  555454  555452 Z [zombie-10] <defunct>
 ```
 
-Missing `ps`? This bash loop will print out at least the `PIDs` for you.
+Missing `ps`? This Bash loop prints PIDs of zombie processes by scanning /proc:
+
 ```bash
 for i in $(ls /proc | awk '/^[0-9]/'); do
     cat /proc/$i/status 2>/dev/null | awk -v pid="${i}" '/State/ && $2 ~ "[Zz]" {print pid " "$2}'
@@ -66,8 +67,8 @@ done
 
 As you can see, there are quite a few lingering on this node. As the `PIDs` are exclusive per node, each node will report something entirely different.
 
----
-### How can we emulate one?
+
+## How can we emulate one?
 [X] - Detection  
 [_] - Emulation
 
@@ -134,10 +135,10 @@ spec:
 ```
 This should create a `Pod` in the `example` `Namespace` that creates `10` zombie `PIDs`.
 
-### Hammer time!
+## Where are they?
 [X] - Detection  
 [X] - Emulation  
-[_] - Remediation
+[_] - Namespace Connection
 
 As you can see, we still don't have a way to fix the underlying issue creating these. In order to do that *safely*, we need to know the `Namespace`, `Pod`, and `Container(s)` these belong to so that we can investigate the underlying application(s) and why this is happening.
 
@@ -203,13 +204,41 @@ Pod Information: {
 }
 ```
 
-### Wrap-Up
+And as an added bonus, I decided to expand the `10` to `100` and a `million`. This was a decent way to demonstrate that these zombie processes aren't free. Just the fact of running `10` of those consumes `~2Mi` more than a simple pod running `sleep`.
+```bash
+$ kubectl top pods
+NAME                         CPU(cores)   MEMORY(bytes)
+pod-with-10-zombies          0m           3Mi
+pod-with-100-zombies         0m           22Mi
+pod-with-a-million-zombies   25m          687Mi
+sleepy-pod                   1m           1Mi
+```
+
+What you can't see is that my million pod eventually errored out. Oh well, it was just a fun exercise to see how many resources these zombie processes consumed.
+```bash
+$ kubectl logs pod/pod-with-a-million-zombies | head -n5
+/usr/bin/bash: fork: retry: Resource temporarily unavailable
+/usr/bin/bash: fork: retry: Resource temporarily unavailable
+/usr/bin/bash: fork: retry: Resource temporarily unavailable
+/usr/bin/bash: fork: retry: Resource temporarily unavailable
+/usr/bin/bash: fork: retry: Resource temporarily unavailable
+```
+
+
+## Wrap-Up
 [X] - Detection  
 [X] - Emulation  
-[X] - Remediation
+[X] - Namespace Connection
 
-This section is still a work in progress!
+So here is what I learned, and hopefully you learned something too!
+- Detecting - Using `ps` or looking at `/proc` will identify a `pid` as a zombie.
+- Emulation - Fairly trivial to reproduce. This is great for testing.
+- Namespace Connection - Finding the `Namespace` wasn't so straightforward and requires combining multiple pieces of information.
+- Remediation - This is a very important part and one I could not cover. Each application is going to have a different solution to this problem and will need some investigation. Now that you know how to detect them though, you have a path forward.
 
+Also, I want to say thanks for reading. This topic was completely foreign to me a few days ago and I wanted to do a small write-up on it so that I could talk about it with others. I did my best to not misrepresent anything or construct things out of thin air. If there are any suggestions or corrections for this, please open an issue on [Github](https://github.com/t-c-l-o-u-d/blog/issues/new).
+
+---
 ### References
 1. https://man.archlinux.org/man/ps.1
 2. https://en.wikipedia.org/wiki/Zombie_process
