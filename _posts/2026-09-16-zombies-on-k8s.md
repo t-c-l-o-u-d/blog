@@ -8,7 +8,7 @@ tags: kubernetes k8s openshift ocp
 A recent finding arose when I was reviewing my kubernetes cluster. I noticed several odd processes lingering on one of my nodes. As I began my investigation, I learned that they were zombies! 🧟🧟🧟 Contained within this post lies my method to learn about, detect, emulate, and squash the zombies.
 
 ---
-### What is a zombie?
+### What is a zombie process?
 Well this is an obvious question I immediately had and I am sure some of the readers out there will too. Before this incident, I had never heard of a zombie. As all engineers should, to the man pages!
 
 ```bash
@@ -25,7 +25,7 @@ $ man -wK zombies
 /usr/share/man/man2/clone.2.gz
 ```
 
-A lot of output, but in the case it helps to have a little context. A zombie here is referring to a zombie process, so I think the `ps` man page is a good start.
+A lot of output, but in the case it helps to have a little context. Since we are dealing with processes I think the `ps` man page is a good start.
 
 > "Z 	defunct (“zombie”) process, terminated but not reaped by its parent"
 
