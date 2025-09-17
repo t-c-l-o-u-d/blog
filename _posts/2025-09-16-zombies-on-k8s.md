@@ -43,7 +43,7 @@ Okay, so none of that sounds terrible, but let's get started with detecting thes
 Detecting them is quite straightforward. Logging into any `worker` node and running `ps` will show them as seen below:
 
 ```bash
-$ ps -o pid,ppid,state,cmd -e | awk 'NR==1; $3 ~ /^[Zz]/'
+$ ps -eo pid,ppid,state,cmd | awk 'NR==1; $3 ~ /^[Zz]/'
     PID    PPID S CMD
  555382  555380 Z [zombie-1] <defunct>
  555390  555388 Z [zombie-2] <defunct>
@@ -146,66 +146,54 @@ I have written a small script that grabs the information we need to continue our
 ```bash
 #!/usr/bin/bash
 
-is_zombie() {
-  local pid=$1
-  local state=$(cat /proc/$pid/status 2>/dev/null | grep State | awk '{print $2}')
-  if [ "$state" = "Z" ]; then
-    return 0
-  else
-    return 1
-  fi
-}
+containers=$(ps -eo pid,state,cgroup | awk '$2 == "Z" {gsub("crio-", "", $3); gsub(".scope", "", $3); gsub("^.*/", "", $3); print $3}' | sort -u)
 
-get_container_id() {
-  local pid=$1
-  cat /proc/$pid/cgroup 2>/dev/null | awk -F 'crio-' '{print $2}' | awk -F '.scope' '{print $1}'
-}
-
-get_pod_and_namespace() {
-  local container_id=$1
-  crictl inspect "$container_id" | jq -r '.[].labels
+for id in $containers; do
+  crictl inspect "$id" | jq -r '.[].labels
     | select(.["io.kubernetes.container.name"] != null)
     | {
         name: .["io.kubernetes.container.name"],
         pod: .["io.kubernetes.pod.name"],
         namespace: .["io.kubernetes.pod.namespace"]
       }'
-}
-
-zombie_pids=$(ps -eo pid,state | awk '$2 == "Z" {print $1}')
-
-if [ -z "$zombie_pids" ]; then
-  echo "No zombie processes found."
-  exit 0
-fi
-
-for pid in $zombie_pids; do
-  if is_zombie $pid; then
-    container_id=$(get_container_id $pid)
-
-    pod_info=$(get_pod_and_namespace $container_id)
-    if [ -n "$pod_info" ]; then
-      echo "Zombie PID: $pid"
-      echo "Container ID: $container_id"
-      echo "Pod Information: $pod_info"
-    fi
-  fi
 done
 ```
 
 Running this from one of the `worker` nodes does indeed print out the information we suspect!
 ```bash
 $ bash zombie-detect.sh
-Zombie PID: 555454
-Container ID: b5b4bd95-b268-46cc-9b4a-11f116d605b0
-Pod Information: {
-  "namespace": "example",
-  "name": "pod-with-a-zombie-mtf8f",
-  "container(s)": [
-    "zombie-container"
-  ]
+{
+  "name": "zombie-container",
+  "pod": "pod-with-a-zombie-84cc6975c8-5xm7p",
+  "namespace": "example"
 }
 ```
+
+For anyone out there running OpenShift, I modified the `bash` script to do this automatically on all the nodes.
+```bash
+#!/bin/bash
+
+worker_nodes=$(oc get nodes -l 'node-role.kubernetes.io/worker' -o custom-columns=NAME:.metadata.name --no-headers)
+
+for node in $worker_nodes; do
+    oc debug node/$node -q -- chroot /host /bin/bash -c "
+        containers=\$(ps -eo pid,state,cgroup | awk '\$2 == \"Z\" {gsub(\"crio-\", \"\", \$3); gsub(\".scope\", \"\", \$3); gsub(\"^.*/\", \"\", \$3); print \$3}' | sort -u)
+
+        for id in \$containers; do
+            crictl inspect \"\$id\" | jq -r '.[].labels
+                | select(.[\"io.kubernetes.container.name\"] != null)
+                | {
+                    name: .[\"io.kubernetes.container.name\"],
+                    pod: .[\"io.kubernetes.pod.name\"],
+                    namespace: .[\"io.kubernetes.pod.namespace\"]
+                }'
+        done
+    " &> $node-output.json
+done
+```
+
+
+
 
 And as an added bonus, I decided to expand the `10` to `100` and a `million`. This was a decent way to demonstrate that these zombie processes aren't free. Just the fact of running `10` of those consumes `~2Mi` more than a simple pod running `sleep`.
 ```bash
