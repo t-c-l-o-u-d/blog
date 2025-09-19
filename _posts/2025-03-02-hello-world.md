@@ -13,7 +13,6 @@ So here we are today. I have no idea how long I will keep this up or how good th
 
 *"Taking action, even if imperfect, is far more valuable than inaction."*
 
-
-With that being said, I have exposed many of my once private repositories. You can find them [here](https://blog.varmack.com/repositories).
+While you are here, take a look at my other repositories. You can find them [here](https://github.com/t-c-l-o-u-d?tab=repositories).
 
 Phew, that was a lot to do and that wraps up this first post. I'll be back with more about my dev containers project soon!

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "HOWTO: Mount LUKS Btrfs for arch-chroot"
+title: "Mount LUKS Btrfs for arch-chroot"
 date: 2025-03-27
 tags: luks archlinux btrfs arch-chroot
 ---
